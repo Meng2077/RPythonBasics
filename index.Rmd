@@ -8,6 +8,8 @@ output:
     highlight: zenburn
 ---
 
+<!-- NOTE: when you are reknitting this, make sure to do `sudo apt install python3-pandas`,
+     and have the `reticulate` package installed. -->
 ```{css, echo=FALSE}
 @import url("https://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css");
 .main-container {max-width: none;}
@@ -18,6 +20,9 @@ code[class^="sourceCode"]::before {
   text-align: right;
   font-size: 70%;
 }
+
+pre[class^="sourceCode r"] {background-color: #333366;}
+pre[class^="sourceCode python"] {background-color: #555533;}
 code[class^="sourceCode r"]::before { content: "R Source";}
 code[class^="sourceCode python"]::before { content: "Python Source"; }
 code[class^="sourceCode bash"]::before { content: "Bash Source"; }
@@ -67,7 +72,25 @@ Rscript ./script
 python3 ./script
 ```
 
-This allows you to run script files even without having any graphical user interface installed or running, which is the fastest way to run any script from top to bottom. You can use this method to try out the code examples below, or use your favourite integrated development environment (IDE), such as RStudio or RKWard for R and Spyder or Jupyter for Python.
+This allows you to run script files even without having any graphical user interface installed or running, which is the fastest way to run any script from top to bottom. This way, you can even combine R and Python code from a Bash script!
+
+Now, let's explore the similarities and differences between the two languages. For that, you need to have Python set up. Let's install the needed packages through the Bash terminal:
+
+```{bash, eval=FALSE}
+sudo apt install python3-pandas
+```
+
+Now you can run R in one terminal, and run Python in another, to try out the code snippets below. To run R in interactive mode:
+
+```{bash, eval=FALSE}
+R
+```
+
+To run Python in interactive mode:
+
+```{bash, eval=FALSE}
+python3
+```
 
 ## Data types
 
@@ -148,12 +171,29 @@ A variable can also hold multiple values of a particular data type, or even mix 
 
 ```{python}
 WUR = {"name": "Wageningen University", "x": 5.7, "y": 52}
+WUR
 type(WUR)
 WUR["x"]
 type(WUR["x"])
 ```
 
 The dictionary type allows naming its elements and accessing them by name. The elements can be of any type.
+
+In R, a similar functionality is called a vector (not to be confused with the geographical data type "vector"!). All variables we have created so far have been vectors of length 1. They didn't have names, but you can give names to elements of a vector. However, unlike Python dictionaries, vectors can only contain elements of the same type, and any items of a different type will get automatically converted to fit the rest. We create vectors longer than the size of one by using the **c**oncatenation function `c()`:
+
+```{r}
+WUR = c(name = "Wageningen University", x = 5.7, y=52)
+WUR
+class(WUR)
+WUR["x"]
+class(WUR["x"])
+```
+
+As you can see, the numbers have been implicitly converted ("coerced" in programming terms) into characters. The disadvantage of named vectors over dictionaries is that we can only use the same type in a single vector. The advantage is that it allows us to use vectorised functions, i.e. functions that perform some work on each element of a vector. Because we know that the vector is going to be entirely composed of characters, we can do something like:
+
+```{r}
+paste(WUR, "addition!")
+```
 
 Both R and Python support lists, which allow combining any data types into one variable. In Python they are created using square brackets, and in R using `list()`:
 
@@ -185,10 +225,11 @@ WUR[-1]
 WUR[-1]
 ```
 
-What is the equivalent of a dictionary in R? It's a named list! When creating a list, you can specify a name of each element, and then slice the list using names. Unlike the colon `:` used in Python for dictionaries, R simply uses the equal sign `=`:
+What is the exact equivalent of a dictionary in R? It's a named list! When creating a list, you can specify a name of each element, and then slice the list using names. Unlike the colon `:` used in Python for dictionaries, R simply uses the equal sign `=`:
 
 ```{r}
 WUR = list("name"="Wageningen University", "x"=5.7, "y"=52)
+WUR
 class(WUR)
 WUR["x"]
 class(WUR["x"])
@@ -203,7 +244,7 @@ class(WUR[["x"]])
 
 There are several data types that are specific to R, though there are Python packages that implement equivalent functionality as well. The most basic type is a vector, which can hold multiple values of the same type. An extension of a vector is a matrix, that has two dimensions. Adding further dimensions, we get an array. A matrix is a special case of an array (two-dimensional), as is a vector (one-dimensional array).
 
-In R, almost everything appears as a vector. That is why in the R print output above you can see `[1]` next to most output, indicating that the value is just the first in a 1-length vector. To make longer vectors, the function `c()` (for **c**oncatenate) is used:
+As we have covered above, in R, almost everything appears as a vector. That is why in the R print output above you can see `[1]` next to most output, indicating that the value is just the first in a 1-length vector. To make longer vectors, the function `c()` is used. While you can give names to elements, it's optional, we can just omit them:
 
 ```{r}
 WURcoords = c(5.7, 52)
@@ -233,6 +274,8 @@ LocArray
 class(LocArray)
 ```
 
+As you can see, we have a cube with two elements in each dimension. Cubes are difficult to visualise, as they are 3D, and our screen is 2D. Therefore, when trying to print one, R presents the cube in "slices" of matrices.
+
 Base Python can only achieve a similar effect using nested lists:
 ```{python}
 WURcoords = [5.7, 52]
@@ -242,6 +285,8 @@ LocMat
 LocArray = [LocMat, LocMat]
 LocArray
 ```
+
+The structure is also a cube, but it is less structured, and therefore printing it does not make it obvious that it is a cube.
 
 Here we can also notice that R can perform vectorised arithmetics: `WURcoords + 1` added 1 to each value of the vector `WURcoords`, and `LocMat + 1` added 1 to each value of the matrix `LocMat`. Core Python does not allow doing so without writing a loop. However, since arrays and vectorised arithmetics are very useful, it has all been implemented in the package `NumPy`, which is now considered to be an essential package in Python:
 
@@ -260,6 +305,8 @@ npLocArray = numpy.array([npLocMat, npLocMat + 1])
 npLocArray
 type(npLocArray)
 ```
+
+As we can see here, NumPy arrays are more structured, and when printing a cube, it also shown sliced, just like in the R example above. The NumPy output also includes square brackets, which you will notice are in the same order and quanity as the plain Python list example we had above, implying that it is ultimately still a list-of-lists.
 
 ```{block, type="alert alert-success"}
 > **Question 3**: Make the same tic-tac-toe board as in question 2 in Python. Hint: You may wish to use numpy. 
@@ -526,7 +573,7 @@ class purposeBuilding(building):
     self.purpose = purpose
 
   def print(self):
-    print(f'{self.name} is a building that is located at x: {self.coordinates["x"]}, y: {self.coordinates["y"]}')
+    print(f'{self.name} is a building used for {self.purpose} purposes, located at x: {self.coordinates["x"]}, y: {self.coordinates["y"]}')
   
 
 # If we don't reinstantiate, the old definition applies:
