@@ -903,7 +903,7 @@ margin-left: 0 !important;
 
       <!-- html_clean authors -->
          <h4 class="author"><em>Dainius Masiliūnas</em></h4>
-            <h4 class="date"><em>30 July, 2024</em></h4>
+            <h4 class="date"><em>14 August, 2024</em></h4>
       
       
    
@@ -1606,6 +1606,60 @@ Hint: You can combine conditions by using <code>&amp;</code> (AND) or
 </blockquote>
 </div>
 </div>
+<div id="conditionals-and-control-flow" class="section level2">
+<h2>Conditionals and control flow</h2>
+<p>We just saw that we can slice arrays based on conditions. We can also
+use conditions to structure our code, so that part of the code only runs
+when certain conditions are met. The conditionals are called
+<code>if</code> and <code>else</code>. The syntax differs a bit between
+R and Python. Here’s an example in R:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" tabindex="-1"></a>MyLatitude <span class="ot">=</span> <span class="dv">52</span></span>
+<span id="cb192-2"><a href="#cb192-2" tabindex="-1"></a>GaiaLatitude <span class="ot">=</span> WURbuildings[WURbuildings[[<span class="st">&quot;name&quot;</span>]] <span class="sc">==</span> <span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;y&quot;</span>]</span>
+<span id="cb192-3"><a href="#cb192-3" tabindex="-1"></a>AuroraLatitude <span class="ot">=</span> WURbuildings[WURbuildings[[<span class="st">&quot;name&quot;</span>]] <span class="sc">==</span> <span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;y&quot;</span>]</span>
+<span id="cb192-4"><a href="#cb192-4" tabindex="-1"></a></span>
+<span id="cb192-5"><a href="#cb192-5" tabindex="-1"></a><span class="cf">if</span> (MyLatitude <span class="sc">&gt;</span> GaiaLatitude <span class="sc">&amp;&amp;</span> MyLatitude <span class="sc">&gt;</span> AuroraLatitude) {</span>
+<span id="cb192-6"><a href="#cb192-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am to the north of both Gaia and Aurora&quot;</span>)</span>
+<span id="cb192-7"><a href="#cb192-7" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (MyLatitude <span class="sc">&lt;</span> GaiaLatitude <span class="sc">&amp;&amp;</span> MyLatitude <span class="sc">&lt;</span> AuroraLatitude) {</span>
+<span id="cb192-8"><a href="#cb192-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am to the south of both Gaia and Aurora&quot;</span>)</span>
+<span id="cb192-9"><a href="#cb192-9" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb192-10"><a href="#cb192-10" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am in between Gaia and Aurora&quot;</span>)</span>
+<span id="cb192-11"><a href="#cb192-11" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot;I am to the north of both Gaia and Aurora&quot;</code></pre>
+<p>Equivalent code in Python (note the lack of parentheses, the words
+for <code>and</code> and <code>or</code>, and the special
+<code>elif</code> keyword):</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb194-1"><a href="#cb194-1" tabindex="-1"></a>MyLatitude <span class="op">=</span> <span class="dv">52</span></span>
+<span id="cb194-2"><a href="#cb194-2" tabindex="-1"></a><span class="co"># Note that boolean conditionals only work with regular booleans, not with Series/DataFrames, hence the .values[0]</span></span>
+<span id="cb194-3"><a href="#cb194-3" tabindex="-1"></a>GaiaLatitude <span class="op">=</span> WURbuildings.loc[WURbuildings[<span class="st">&quot;name&quot;</span>] <span class="op">==</span> <span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;y&quot;</span>].values[<span class="dv">0</span>]</span>
+<span id="cb194-4"><a href="#cb194-4" tabindex="-1"></a>AuroraLatitude <span class="op">=</span> WURbuildings.loc[WURbuildings[<span class="st">&quot;name&quot;</span>] <span class="op">==</span> <span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;y&quot;</span>].values[<span class="dv">0</span>]</span>
+<span id="cb194-5"><a href="#cb194-5" tabindex="-1"></a></span>
+<span id="cb194-6"><a href="#cb194-6" tabindex="-1"></a><span class="cf">if</span> MyLatitude <span class="op">&gt;</span> GaiaLatitude <span class="kw">and</span> MyLatitude <span class="op">&gt;</span> AuroraLatitude:</span>
+<span id="cb194-7"><a href="#cb194-7" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am to the north of both Gaia and Aurora&quot;</span>)</span>
+<span id="cb194-8"><a href="#cb194-8" tabindex="-1"></a><span class="cf">elif</span> MyLatitude <span class="op">&lt;</span> GaiaLatitude <span class="kw">and</span> MyLatitude <span class="op">&lt;</span> AuroraLatitude:</span>
+<span id="cb194-9"><a href="#cb194-9" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am to the south of both Gaia and Aurora&quot;</span>)</span>
+<span id="cb194-10"><a href="#cb194-10" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb194-11"><a href="#cb194-11" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am in between Gaia and Aurora&quot;</span>)</span></code></pre></div>
+<pre><code>## I am to the north of both Gaia and Aurora</code></pre>
+<p>Note that the boolean operators <code>&amp;</code> and <code>|</code>
+(for <em>and</em> and <em>or</em> respectively) are valid in both R and
+Python, but they mean different things! In R, <code>&amp;</code> is a
+vectorised form of <code>&amp;&amp;</code>, in other words, it can
+compare boolean vectors against each other:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>) <span class="sc">&amp;</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE FALSE FALSE</code></pre>
+<p>This is good in some cases, such as slicing arrays using boolean
+arrays, and not so good in other cases. For instance,
+<code>if (c(TRUE, FALSE))</code> is impossible to determine and thus
+will throw an error. The form <code>&amp;&amp;</code> only compares one
+boolean with another boolean and throws an error otherwise, and thus is
+more useful in conditionals.</p>
+<p>In Python, <code>&amp;</code> is a bitwise comparison, that is, it
+does not work on booleans, but rather on numbers. It just so happens
+that Python implicitly converts booleans to numbers (<code>True</code>
+to 1 and <code>False</code> to 0), so it often works with booleans as
+well, but it is not intended for that. Instead, the regular boolean
+comparison is done using <code>and</code>.</p>
+</div>
 <div id="objects-and-inheritance" class="section level2">
 <h2>Objects and inheritance</h2>
 <p>Both R and Python are object-oriented languages, and in this tutorial
@@ -1616,39 +1670,41 @@ words, what is the class of the object. In R, <code>str()</code> allows
 investigating the structure of an object. Python does not have a unified
 function for this and different packages implement this functionality
 differently, if at all.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" tabindex="-1"></a>WUR <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Wageningen University&quot;</span>, <span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.7</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="dv">52</span>)</span>
-<span id="cb192-2"><a href="#cb192-2" tabindex="-1"></a><span class="fu">str</span>(WUR) <span class="co"># Show the structure of a list</span></span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" tabindex="-1"></a>WUR <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Wageningen University&quot;</span>, <span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.7</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="dv">52</span>)</span>
+<span id="cb198-2"><a href="#cb198-2" tabindex="-1"></a><span class="fu">str</span>(WUR) <span class="co"># Show the structure of a list</span></span></code></pre></div>
 <pre><code>## List of 3
 ##  $ name: chr &quot;Wageningen University&quot;
 ##  $ x   : num 5.7
 ##  $ y   : num 52</code></pre>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" tabindex="-1"></a>WURbuildings</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" tabindex="-1"></a>WURbuildings</span></code></pre></div>
 <pre><code>##     name     x      y
 ## 1   Gaia 5.665 51.987
 ## 2 Aurora 5.657 51.982</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" tabindex="-1"></a><span class="fu">str</span>(WURbuildings) <span class="co"># Show the structure of a data frame (which is also a type of list)</span></span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" tabindex="-1"></a><span class="fu">str</span>(WURbuildings) <span class="co"># Show the structure of a data frame (which is also a type of list)</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    2 obs. of  3 variables:
 ##  $ name: chr  &quot;Gaia&quot; &quot;Aurora&quot;
 ##  $ x   : num  5.67 5.66
 ##  $ y   : num  52 52</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb198-1"><a href="#cb198-1" tabindex="-1"></a>WURbuildings <span class="co"># pandas data frame</span></span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="#cb204-1" tabindex="-1"></a>WURbuildings <span class="co"># pandas data frame</span></span></code></pre></div>
 <pre><code>##      name      x       y
 ## 0    Gaia  5.665  51.987
 ## 1  Aurora  5.657  51.982</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb200-1"><a href="#cb200-1" tabindex="-1"></a>WURbuildings.dtypes <span class="co"># Shows data types</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="#cb206-1" tabindex="-1"></a>WURbuildings.dtypes <span class="co"># Shows data types</span></span></code></pre></div>
 <pre><code>## name     object
 ## x       float64
 ## y       float64
 ## dtype: object</code></pre>
-<div class="sourceCode" id="cb202"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb202-1"><a href="#cb202-1" tabindex="-1"></a><span class="bu">vars</span>(WURbuildings) <span class="co"># More generic, but does not work with lists and dicts</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="#cb208-1" tabindex="-1"></a><span class="bu">vars</span>(WURbuildings) <span class="co"># More generic, but does not work with lists and dicts</span></span></code></pre></div>
 <pre><code>## {&#39;_is_copy&#39;: None, &#39;_mgr&#39;: BlockManager
 ## Items: Index([&#39;name&#39;, &#39;x&#39;, &#39;y&#39;], dtype=&#39;object&#39;)
 ## Axis 1: RangeIndex(start=0, stop=2, step=1)
 ## NumpyBlock: slice(0, 1, 1), 1 x 2, dtype: object
 ## NumpyBlock: slice(1, 3, 1), 2 x 2, dtype: float64, &#39;_item_cache&#39;: {&#39;name&#39;: 0      Gaia
 ## 1    Aurora
-## Name: name, dtype: object}, &#39;_attrs&#39;: {}, &#39;_flags&#39;: &lt;Flags(allows_duplicate_labels=True)&gt;}</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="#cb204-1" tabindex="-1"></a><span class="bu">dir</span>(WURbuildings) <span class="co"># All of the methods contained in the object</span></span></code></pre></div>
+## Name: name, dtype: object, &#39;y&#39;: 0    51.987
+## 1    51.982
+## Name: y, dtype: float64}, &#39;_attrs&#39;: {}, &#39;_flags&#39;: &lt;Flags(allows_duplicate_labels=True)&gt;}</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="#cb210-1" tabindex="-1"></a><span class="bu">dir</span>(WURbuildings) <span class="co"># All of the methods contained in the object</span></span></code></pre></div>
 <pre><code>## [&#39;T&#39;, &#39;_AXIS_LEN&#39;, &#39;_AXIS_ORDERS&#39;, &#39;_AXIS_TO_AXIS_NUMBER&#39;, &#39;_HANDLED_TYPES&#39;, &#39;__abs__&#39;, &#39;__add__&#39;, &#39;__and__&#39;, &#39;__annotations__&#39;, &#39;__array__&#39;, &#39;__array_priority__&#39;, &#39;__array_ufunc__&#39;, &#39;__bool__&#39;, &#39;__class__&#39;, &#39;__contains__&#39;, &#39;__copy__&#39;, &#39;__dataframe__&#39;, &#39;__dataframe_consortium_standard__&#39;, &#39;__deepcopy__&#39;, &#39;__delattr__&#39;, &#39;__delitem__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__divmod__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__finalize__&#39;, &#39;__floordiv__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattr__&#39;, &#39;__getattribute__&#39;, &#39;__getitem__&#39;, &#39;__getstate__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__iadd__&#39;, &#39;__iand__&#39;, &#39;__ifloordiv__&#39;, &#39;__imod__&#39;, &#39;__imul__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__invert__&#39;, &#39;__ior__&#39;, &#39;__ipow__&#39;, &#39;__isub__&#39;, &#39;__iter__&#39;, &#39;__itruediv__&#39;, &#39;__ixor__&#39;, &#39;__le__&#39;, &#39;__len__&#39;, &#39;__lt__&#39;, &#39;__matmul__&#39;, &#39;__mod__&#39;, &#39;__module__&#39;, &#39;__mul__&#39;, &#39;__ne__&#39;, &#39;__neg__&#39;, &#39;__new__&#39;, &#39;__nonzero__&#39;, &#39;__or__&#39;, &#39;__pandas_priority__&#39;, &#39;__pos__&#39;, &#39;__pow__&#39;, &#39;__radd__&#39;, &#39;__rand__&#39;, &#39;__rdivmod__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__rfloordiv__&#39;, &#39;__rmatmul__&#39;, &#39;__rmod__&#39;, &#39;__rmul__&#39;, &#39;__ror__&#39;, &#39;__round__&#39;, &#39;__rpow__&#39;, &#39;__rsub__&#39;, &#39;__rtruediv__&#39;, &#39;__rxor__&#39;, &#39;__setattr__&#39;, &#39;__setitem__&#39;, &#39;__setstate__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__sub__&#39;, &#39;__subclasshook__&#39;, &#39;__truediv__&#39;, &#39;__weakref__&#39;, &#39;__xor__&#39;, &#39;_accessors&#39;, &#39;_accum_func&#39;, &#39;_agg_examples_doc&#39;, &#39;_agg_see_also_doc&#39;, &#39;_align_for_op&#39;, &#39;_align_frame&#39;, &#39;_align_series&#39;, &#39;_append&#39;, &#39;_arith_method&#39;, &#39;_arith_method_with_reindex&#39;, &#39;_as_manager&#39;, &#39;_attrs&#39;, &#39;_box_col_values&#39;, &#39;_can_fast_transpose&#39;, &#39;_check_inplace_and_allows_duplicate_labels&#39;, &#39;_check_is_chained_assignment_possible&#39;, &#39;_check_label_or_level_ambiguity&#39;, &#39;_check_setitem_copy&#39;, &#39;_clear_item_cache&#39;, &#39;_clip_with_one_bound&#39;, &#39;_clip_with_scalar&#39;, &#39;_cmp_method&#39;, &#39;_combine_frame&#39;, &#39;_consolidate&#39;, &#39;_consolidate_inplace&#39;, &#39;_construct_axes_dict&#39;, &#39;_construct_result&#39;, &#39;_constructor&#39;, &#39;_constructor_from_mgr&#39;, &#39;_constructor_sliced&#39;, &#39;_constructor_sliced_from_mgr&#39;, &#39;_create_data_for_split_and_tight_to_dict&#39;, &#39;_data&#39;, &#39;_deprecate_downcast&#39;, &#39;_dir_additions&#39;, &#39;_dir_deletions&#39;, &#39;_dispatch_frame_op&#39;, &#39;_drop_axis&#39;, &#39;_drop_labels_or_levels&#39;, &#39;_ensure_valid_index&#39;, &#39;_find_valid_index&#39;, &#39;_flags&#39;, &#39;_flex_arith_method&#39;, &#39;_flex_cmp_method&#39;, &#39;_from_arrays&#39;, &#39;_from_mgr&#39;, &#39;_get_agg_axis&#39;, &#39;_get_axis&#39;, &#39;_get_axis_name&#39;, &#39;_get_axis_number&#39;, &#39;_get_axis_resolvers&#39;, &#39;_get_block_manager_axis&#39;, &#39;_get_bool_data&#39;, &#39;_get_cleaned_column_resolvers&#39;, &#39;_get_column_array&#39;, &#39;_get_index_resolvers&#39;, &#39;_get_item_cache&#39;, &#39;_get_label_or_level_values&#39;, &#39;_get_numeric_data&#39;, &#39;_get_value&#39;, &#39;_getitem_bool_array&#39;, &#39;_getitem_multilevel&#39;, &#39;_getitem_nocopy&#39;, &#39;_getitem_slice&#39;, &#39;_gotitem&#39;, &#39;_hidden_attrs&#39;, &#39;_indexed_same&#39;, &#39;_info_axis&#39;, &#39;_info_axis_name&#39;, &#39;_info_axis_number&#39;, &#39;_info_repr&#39;, &#39;_init_mgr&#39;, &#39;_inplace_method&#39;, &#39;_internal_names&#39;, &#39;_internal_names_set&#39;, &#39;_is_copy&#39;, &#39;_is_homogeneous_type&#39;, &#39;_is_label_or_level_reference&#39;, &#39;_is_label_reference&#39;, &#39;_is_level_reference&#39;, &#39;_is_mixed_type&#39;, &#39;_is_view&#39;, &#39;_iset_item&#39;, &#39;_iset_item_mgr&#39;, &#39;_iset_not_inplace&#39;, &#39;_item_cache&#39;, &#39;_iter_column_arrays&#39;, &#39;_ixs&#39;, &#39;_logical_func&#39;, &#39;_logical_method&#39;, &#39;_maybe_align_series_as_frame&#39;, &#39;_maybe_cache_changed&#39;, &#39;_maybe_update_cacher&#39;, &#39;_metadata&#39;, &#39;_mgr&#39;, &#39;_min_count_stat_function&#39;, &#39;_needs_reindex_multi&#39;, &#39;_pad_or_backfill&#39;, &#39;_protect_consolidate&#39;, &#39;_reduce&#39;, &#39;_reduce_axis1&#39;, &#39;_reindex_axes&#39;, &#39;_reindex_multi&#39;, &#39;_reindex_with_indexers&#39;, &#39;_rename&#39;, &#39;_replace_columnwise&#39;, &#39;_repr_data_resource_&#39;, &#39;_repr_fits_horizontal_&#39;, &#39;_repr_fits_vertical_&#39;, &#39;_repr_html_&#39;, &#39;_repr_latex_&#39;, &#39;_reset_cache&#39;, &#39;_reset_cacher&#39;, &#39;_sanitize_column&#39;, &#39;_series&#39;, &#39;_set_axis&#39;, &#39;_set_axis_name&#39;, &#39;_set_axis_nocheck&#39;, &#39;_set_is_copy&#39;, &#39;_set_item&#39;, &#39;_set_item_frame_value&#39;, &#39;_set_item_mgr&#39;, &#39;_set_value&#39;, &#39;_setitem_array&#39;, &#39;_setitem_frame&#39;, &#39;_setitem_slice&#39;, &#39;_shift_with_freq&#39;, &#39;_should_reindex_frame_op&#39;, &#39;_slice&#39;, &#39;_sliced_from_mgr&#39;, &#39;_stat_function&#39;, &#39;_stat_function_ddof&#39;, &#39;_take_with_is_copy&#39;, &#39;_to_dict_of_blocks&#39;, &#39;_to_latex_via_styler&#39;, &#39;_typ&#39;, &#39;_update_inplace&#39;, &#39;_validate_dtype&#39;, &#39;_values&#39;, &#39;_where&#39;, &#39;abs&#39;, &#39;add&#39;, &#39;add_prefix&#39;, &#39;add_suffix&#39;, &#39;agg&#39;, &#39;aggregate&#39;, &#39;align&#39;, &#39;all&#39;, &#39;any&#39;, &#39;apply&#39;, &#39;applymap&#39;, &#39;asfreq&#39;, &#39;asof&#39;, &#39;assign&#39;, &#39;astype&#39;, &#39;at&#39;, &#39;at_time&#39;, &#39;attrs&#39;, &#39;axes&#39;, &#39;backfill&#39;, &#39;between_time&#39;, &#39;bfill&#39;, &#39;bool&#39;, &#39;boxplot&#39;, &#39;clip&#39;, &#39;columns&#39;, &#39;combine&#39;, &#39;combine_first&#39;, &#39;compare&#39;, &#39;convert_dtypes&#39;, &#39;copy&#39;, &#39;corr&#39;, &#39;corrwith&#39;, &#39;count&#39;, &#39;cov&#39;, &#39;cummax&#39;, &#39;cummin&#39;, &#39;cumprod&#39;, &#39;cumsum&#39;, &#39;describe&#39;, &#39;diff&#39;, &#39;div&#39;, &#39;divide&#39;, &#39;dot&#39;, &#39;drop&#39;, &#39;drop_duplicates&#39;, &#39;droplevel&#39;, &#39;dropna&#39;, &#39;dtypes&#39;, &#39;duplicated&#39;, &#39;empty&#39;, &#39;eq&#39;, &#39;equals&#39;, &#39;eval&#39;, &#39;ewm&#39;, &#39;expanding&#39;, &#39;explode&#39;, &#39;ffill&#39;, &#39;fillna&#39;, &#39;filter&#39;, &#39;first&#39;, &#39;first_valid_index&#39;, &#39;flags&#39;, &#39;floordiv&#39;, &#39;from_dict&#39;, &#39;from_records&#39;, &#39;ge&#39;, &#39;get&#39;, &#39;groupby&#39;, &#39;gt&#39;, &#39;head&#39;, &#39;hist&#39;, &#39;iat&#39;, &#39;idxmax&#39;, &#39;idxmin&#39;, &#39;iloc&#39;, &#39;index&#39;, &#39;infer_objects&#39;, &#39;info&#39;, &#39;insert&#39;, &#39;interpolate&#39;, &#39;isetitem&#39;, &#39;isin&#39;, &#39;isna&#39;, &#39;isnull&#39;, &#39;items&#39;, &#39;iterrows&#39;, &#39;itertuples&#39;, &#39;join&#39;, &#39;keys&#39;, &#39;kurt&#39;, &#39;kurtosis&#39;, &#39;last&#39;, &#39;last_valid_index&#39;, &#39;le&#39;, &#39;loc&#39;, &#39;lt&#39;, &#39;map&#39;, &#39;mask&#39;, &#39;max&#39;, &#39;mean&#39;, &#39;median&#39;, &#39;melt&#39;, &#39;memory_usage&#39;, &#39;merge&#39;, &#39;min&#39;, &#39;mod&#39;, &#39;mode&#39;, &#39;mul&#39;, &#39;multiply&#39;, &#39;name&#39;, &#39;ndim&#39;, &#39;ne&#39;, &#39;nlargest&#39;, &#39;notna&#39;, &#39;notnull&#39;, &#39;nsmallest&#39;, &#39;nunique&#39;, &#39;pad&#39;, &#39;pct_change&#39;, &#39;pipe&#39;, &#39;pivot&#39;, &#39;pivot_table&#39;, &#39;plot&#39;, &#39;pop&#39;, &#39;pow&#39;, &#39;prod&#39;, &#39;product&#39;, &#39;quantile&#39;, &#39;query&#39;, &#39;radd&#39;, &#39;rank&#39;, &#39;rdiv&#39;, &#39;reindex&#39;, &#39;reindex_like&#39;, &#39;rename&#39;, &#39;rename_axis&#39;, &#39;reorder_levels&#39;, &#39;replace&#39;, &#39;resample&#39;, &#39;reset_index&#39;, &#39;rfloordiv&#39;, &#39;rmod&#39;, &#39;rmul&#39;, &#39;rolling&#39;, &#39;round&#39;, &#39;rpow&#39;, &#39;rsub&#39;, &#39;rtruediv&#39;, &#39;sample&#39;, &#39;select_dtypes&#39;, &#39;sem&#39;, &#39;set_axis&#39;, &#39;set_flags&#39;, &#39;set_index&#39;, &#39;shape&#39;, &#39;shift&#39;, &#39;size&#39;, &#39;skew&#39;, &#39;sort_index&#39;, &#39;sort_values&#39;, &#39;squeeze&#39;, &#39;stack&#39;, &#39;std&#39;, &#39;style&#39;, &#39;sub&#39;, &#39;subtract&#39;, &#39;sum&#39;, &#39;swapaxes&#39;, &#39;swaplevel&#39;, &#39;tail&#39;, &#39;take&#39;, &#39;to_clipboard&#39;, &#39;to_csv&#39;, &#39;to_dict&#39;, &#39;to_excel&#39;, &#39;to_feather&#39;, &#39;to_gbq&#39;, &#39;to_hdf&#39;, &#39;to_html&#39;, &#39;to_json&#39;, &#39;to_latex&#39;, &#39;to_markdown&#39;, &#39;to_numpy&#39;, &#39;to_orc&#39;, &#39;to_parquet&#39;, &#39;to_period&#39;, &#39;to_pickle&#39;, &#39;to_records&#39;, &#39;to_sql&#39;, &#39;to_stata&#39;, &#39;to_string&#39;, &#39;to_timestamp&#39;, &#39;to_xarray&#39;, &#39;to_xml&#39;, &#39;transform&#39;, &#39;transpose&#39;, &#39;truediv&#39;, &#39;truncate&#39;, &#39;tz_convert&#39;, &#39;tz_localize&#39;, &#39;unstack&#39;, &#39;update&#39;, &#39;value_counts&#39;, &#39;values&#39;, &#39;var&#39;, &#39;where&#39;, &#39;x&#39;, &#39;xs&#39;, &#39;y&#39;]</code></pre>
 <p>In the last example we can see that objects can contain other objects
 and/or functions. A class is a definition of an object, and a function
@@ -1666,27 +1722,27 @@ which, when instantiated as an object, will contain a <code>name</code>,
 and a vector <code>coordinates</code>. We want to also have a function
 that prints these attributes in a nice to read way. This is how it would
 be done in R:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" tabindex="-1"></a>Gaia <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.987</span>))</span>
-<span id="cb206-2"><a href="#cb206-2" tabindex="-1"></a><span class="fu">class</span>(Gaia) <span class="co"># It is a list</span></span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" tabindex="-1"></a>Gaia <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.987</span>))</span>
+<span id="cb212-2"><a href="#cb212-2" tabindex="-1"></a><span class="fu">class</span>(Gaia) <span class="co"># It is a list</span></span></code></pre></div>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" tabindex="-1"></a><span class="fu">class</span>(Gaia) <span class="ot">=</span> <span class="st">&quot;building&quot;</span> <span class="co"># And now it&#39;s a `building`!</span></span>
-<span id="cb208-2"><a href="#cb208-2" tabindex="-1"></a><span class="fu">class</span>(Gaia)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" tabindex="-1"></a><span class="fu">class</span>(Gaia) <span class="ot">=</span> <span class="st">&quot;building&quot;</span> <span class="co"># And now it&#39;s a `building`!</span></span>
+<span id="cb214-2"><a href="#cb214-2" tabindex="-1"></a><span class="fu">class</span>(Gaia)</span></code></pre></div>
 <pre><code>## [1] &quot;building&quot;</code></pre>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" tabindex="-1"></a>Aurora <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.982</span>))</span>
-<span id="cb210-2"><a href="#cb210-2" tabindex="-1"></a><span class="fu">class</span>(Aurora) <span class="ot">=</span> <span class="st">&quot;building&quot;</span></span>
-<span id="cb210-3"><a href="#cb210-3" tabindex="-1"></a><span class="fu">class</span>(Aurora)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" tabindex="-1"></a>Aurora <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.982</span>))</span>
+<span id="cb216-2"><a href="#cb216-2" tabindex="-1"></a><span class="fu">class</span>(Aurora) <span class="ot">=</span> <span class="st">&quot;building&quot;</span></span>
+<span id="cb216-3"><a href="#cb216-3" tabindex="-1"></a><span class="fu">class</span>(Aurora)</span></code></pre></div>
 <pre><code>## [1] &quot;building&quot;</code></pre>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" tabindex="-1"></a><span class="co"># Define a function to print buildings</span></span>
-<span id="cb212-2"><a href="#cb212-2" tabindex="-1"></a><span class="co"># We use the &quot;paste&quot; function to format strings. </span></span>
-<span id="cb212-3"><a href="#cb212-3" tabindex="-1"></a>print.building <span class="ot">=</span> <span class="cf">function</span>(x)</span>
-<span id="cb212-4"><a href="#cb212-4" tabindex="-1"></a>{</span>
-<span id="cb212-5"><a href="#cb212-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(x[[<span class="st">&quot;name&quot;</span>]], <span class="st">&quot;is a building that is located at x:&quot;</span>,</span>
-<span id="cb212-6"><a href="#cb212-6" tabindex="-1"></a>    x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;x&quot;</span>], <span class="st">&quot;y:&quot;</span>, x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;y&quot;</span>]))</span>
-<span id="cb212-7"><a href="#cb212-7" tabindex="-1"></a>}</span>
-<span id="cb212-8"><a href="#cb212-8" tabindex="-1"></a><span class="co"># Now we simply use print() and get our custom output:</span></span>
-<span id="cb212-9"><a href="#cb212-9" tabindex="-1"></a><span class="fu">print</span>(Gaia)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1" tabindex="-1"></a><span class="co"># Define a function to print buildings</span></span>
+<span id="cb218-2"><a href="#cb218-2" tabindex="-1"></a><span class="co"># We use the &quot;paste&quot; function to format strings. </span></span>
+<span id="cb218-3"><a href="#cb218-3" tabindex="-1"></a>print.building <span class="ot">=</span> <span class="cf">function</span>(x)</span>
+<span id="cb218-4"><a href="#cb218-4" tabindex="-1"></a>{</span>
+<span id="cb218-5"><a href="#cb218-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(x[[<span class="st">&quot;name&quot;</span>]], <span class="st">&quot;is a building that is located at x:&quot;</span>,</span>
+<span id="cb218-6"><a href="#cb218-6" tabindex="-1"></a>    x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;x&quot;</span>], <span class="st">&quot;y:&quot;</span>, x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;y&quot;</span>]))</span>
+<span id="cb218-7"><a href="#cb218-7" tabindex="-1"></a>}</span>
+<span id="cb218-8"><a href="#cb218-8" tabindex="-1"></a><span class="co"># Now we simply use print() and get our custom output:</span></span>
+<span id="cb218-9"><a href="#cb218-9" tabindex="-1"></a><span class="fu">print</span>(Gaia)</span></code></pre></div>
 <pre><code>## [1] &quot;Gaia is a building that is located at x: 5.665 y: 51.987&quot;</code></pre>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" tabindex="-1"></a><span class="fu">print</span>(Aurora)</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" tabindex="-1"></a><span class="fu">print</span>(Aurora)</span></code></pre></div>
 <pre><code>## [1] &quot;Aurora is a building that is located at x: 5.657 y: 51.982&quot;</code></pre>
 <p>The reason why this works is because R uses the concept of function
 signatures. When running <code>print()</code>, R will first check what
@@ -1696,34 +1752,34 @@ if there is a function defined that is called <code>print.class</code>
 function instead of the <code>print.default</code> function.</p>
 <p>In Python, we need to formally define a class and then instantiate
 it:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb216-1"><a href="#cb216-1" tabindex="-1"></a><span class="kw">class</span> building:</span>
-<span id="cb216-2"><a href="#cb216-2" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates):</span>
-<span id="cb216-3"><a href="#cb216-3" tabindex="-1"></a>    <span class="va">self</span>.name <span class="op">=</span> name</span>
-<span id="cb216-4"><a href="#cb216-4" tabindex="-1"></a>    <span class="va">self</span>.coordinates <span class="op">=</span> coordinates</span>
-<span id="cb216-5"><a href="#cb216-5" tabindex="-1"></a></span>
-<span id="cb216-6"><a href="#cb216-6" tabindex="-1"></a>  <span class="kw">def</span> <span class="bu">print</span>(<span class="va">self</span>):</span>
-<span id="cb216-7"><a href="#cb216-7" tabindex="-1"></a>    <span class="co"># Note that we use &quot;string formatting&quot;. If a &quot;f&quot; is put before a string quote, </span></span>
-<span id="cb216-8"><a href="#cb216-8" tabindex="-1"></a>    <span class="co"># all text inside curly brackets will be executed as plain Python </span></span>
-<span id="cb216-9"><a href="#cb216-9" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> is a building that is located at x: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;x&quot;</span>]<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;y&quot;</span>]<span class="sc">}</span><span class="ss">&#39;</span>)</span>
-<span id="cb216-10"><a href="#cb216-10" tabindex="-1"></a></span>
-<span id="cb216-11"><a href="#cb216-11" tabindex="-1"></a><span class="co"># Instantiate the class by calling it as if it was its __init__ function</span></span>
-<span id="cb216-12"><a href="#cb216-12" tabindex="-1"></a>Gaia <span class="op">=</span> building(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>})</span>
-<span id="cb216-13"><a href="#cb216-13" tabindex="-1"></a>Aurora <span class="op">=</span> building(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>})</span>
-<span id="cb216-14"><a href="#cb216-14" tabindex="-1"></a><span class="bu">type</span>(Gaia)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb222-1"><a href="#cb222-1" tabindex="-1"></a><span class="kw">class</span> building:</span>
+<span id="cb222-2"><a href="#cb222-2" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates):</span>
+<span id="cb222-3"><a href="#cb222-3" tabindex="-1"></a>    <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb222-4"><a href="#cb222-4" tabindex="-1"></a>    <span class="va">self</span>.coordinates <span class="op">=</span> coordinates</span>
+<span id="cb222-5"><a href="#cb222-5" tabindex="-1"></a></span>
+<span id="cb222-6"><a href="#cb222-6" tabindex="-1"></a>  <span class="kw">def</span> <span class="bu">print</span>(<span class="va">self</span>):</span>
+<span id="cb222-7"><a href="#cb222-7" tabindex="-1"></a>    <span class="co"># Note that we use &quot;string formatting&quot;. If a &quot;f&quot; is put before a string quote, </span></span>
+<span id="cb222-8"><a href="#cb222-8" tabindex="-1"></a>    <span class="co"># all text inside curly brackets will be executed as plain Python </span></span>
+<span id="cb222-9"><a href="#cb222-9" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> is a building that is located at x: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;x&quot;</span>]<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;y&quot;</span>]<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb222-10"><a href="#cb222-10" tabindex="-1"></a></span>
+<span id="cb222-11"><a href="#cb222-11" tabindex="-1"></a><span class="co"># Instantiate the class by calling it as if it was its __init__ function</span></span>
+<span id="cb222-12"><a href="#cb222-12" tabindex="-1"></a>Gaia <span class="op">=</span> building(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>})</span>
+<span id="cb222-13"><a href="#cb222-13" tabindex="-1"></a>Aurora <span class="op">=</span> building(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>})</span>
+<span id="cb222-14"><a href="#cb222-14" tabindex="-1"></a><span class="bu">type</span>(Gaia)</span></code></pre></div>
 <pre><code>## &lt;class &#39;__main__.building&#39;&gt;</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb218-1"><a href="#cb218-1" tabindex="-1"></a><span class="bu">type</span>(Aurora)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb224-1"><a href="#cb224-1" tabindex="-1"></a><span class="bu">type</span>(Aurora)</span></code></pre></div>
 <pre><code>## &lt;class &#39;__main__.building&#39;&gt;</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb220-1"><a href="#cb220-1" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb226-1"><a href="#cb226-1" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Gaia is a building that is located at x: 5.665, y: 51.987</code></pre>
-<div class="sourceCode" id="cb222"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb222-1"><a href="#cb222-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb228-1"><a href="#cb228-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Aurora is a building that is located at x: 5.657, y: 51.982</code></pre>
 <p>Note that we called the method <code>print()</code> that is inside
 our object, not the global function <code>print()</code>, which would
 give a different output:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb224-1"><a href="#cb224-1" tabindex="-1"></a><span class="bu">print</span>(Gaia)</span></code></pre></div>
-<pre><code>## &lt;__main__.building object at 0x71564b134b00&gt;</code></pre>
-<div class="sourceCode" id="cb226"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb226-1"><a href="#cb226-1" tabindex="-1"></a><span class="bu">print</span>(Aurora)</span></code></pre></div>
-<pre><code>## &lt;__main__.building object at 0x71564a6461e0&gt;</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="#cb230-1" tabindex="-1"></a><span class="bu">print</span>(Gaia)</span></code></pre></div>
+<pre><code>## &lt;__main__.building object at 0x73a7d8c1cad0&gt;</code></pre>
+<div class="sourceCode" id="cb232"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb232-1"><a href="#cb232-1" tabindex="-1"></a><span class="bu">print</span>(Aurora)</span></code></pre></div>
+<pre><code>## &lt;__main__.building object at 0x73a7d7b18b60&gt;</code></pre>
 <p>A key concept in object-oriented programming is inheritance: a class
 can inherit properties and methods of its parent class. This allows us
 to make extensions of existing classes without having to duplicate a lot
@@ -1731,60 +1787,60 @@ of work. Let’s say we want to extend our <code>building</code> class
 with an attribute <code>purpose</code>, calling the new child class
 <code>purposeBuilding</code>. In R, inheritance works by making an
 object part of multiple classes:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" tabindex="-1"></a>GaiaPurpose <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.987</span>), <span class="at">purpose=</span><span class="st">&quot;office&quot;</span>)</span>
-<span id="cb228-2"><a href="#cb228-2" tabindex="-1"></a><span class="fu">class</span>(GaiaPurpose) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;purposeBuilding&quot;</span>, <span class="st">&quot;building&quot;</span>)</span>
-<span id="cb228-3"><a href="#cb228-3" tabindex="-1"></a><span class="fu">print</span>(GaiaPurpose) <span class="co"># We reuse the parent class `print()`</span></span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" tabindex="-1"></a>GaiaPurpose <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.987</span>), <span class="at">purpose=</span><span class="st">&quot;office&quot;</span>)</span>
+<span id="cb234-2"><a href="#cb234-2" tabindex="-1"></a><span class="fu">class</span>(GaiaPurpose) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;purposeBuilding&quot;</span>, <span class="st">&quot;building&quot;</span>)</span>
+<span id="cb234-3"><a href="#cb234-3" tabindex="-1"></a><span class="fu">print</span>(GaiaPurpose) <span class="co"># We reuse the parent class `print()`</span></span></code></pre></div>
 <pre><code>## [1] &quot;Gaia is a building that is located at x: 5.665 y: 51.987&quot;</code></pre>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" tabindex="-1"></a>AuroraPurpose <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.982</span>), <span class="at">purpose=</span><span class="st">&quot;education&quot;</span>)</span>
-<span id="cb230-2"><a href="#cb230-2" tabindex="-1"></a><span class="fu">class</span>(AuroraPurpose) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;purposeBuilding&quot;</span>, <span class="st">&quot;building&quot;</span>)</span>
-<span id="cb230-3"><a href="#cb230-3" tabindex="-1"></a><span class="fu">print</span>(AuroraPurpose)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" tabindex="-1"></a>AuroraPurpose <span class="ot">=</span> <span class="fu">list</span>(<span class="st">&quot;name&quot;</span><span class="ot">=</span><span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;coordinates&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span><span class="ot">=</span><span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span><span class="ot">=</span><span class="fl">51.982</span>), <span class="at">purpose=</span><span class="st">&quot;education&quot;</span>)</span>
+<span id="cb236-2"><a href="#cb236-2" tabindex="-1"></a><span class="fu">class</span>(AuroraPurpose) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;purposeBuilding&quot;</span>, <span class="st">&quot;building&quot;</span>)</span>
+<span id="cb236-3"><a href="#cb236-3" tabindex="-1"></a><span class="fu">print</span>(AuroraPurpose)</span></code></pre></div>
 <pre><code>## [1] &quot;Aurora is a building that is located at x: 5.657 y: 51.982&quot;</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" tabindex="-1"></a><span class="co"># Make a custom print function for purposeBuilding</span></span>
-<span id="cb232-2"><a href="#cb232-2" tabindex="-1"></a>print.purposeBuilding <span class="ot">=</span> <span class="cf">function</span>(x)</span>
-<span id="cb232-3"><a href="#cb232-3" tabindex="-1"></a>{</span>
-<span id="cb232-4"><a href="#cb232-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(x[[<span class="st">&quot;name&quot;</span>]], <span class="st">&quot;is an&quot;</span>, x[[<span class="st">&quot;purpose&quot;</span>]], <span class="st">&quot;building that is located at x:&quot;</span>,</span>
-<span id="cb232-5"><a href="#cb232-5" tabindex="-1"></a>    x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;x&quot;</span>], <span class="st">&quot;y:&quot;</span>, x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;y&quot;</span>]))</span>
-<span id="cb232-6"><a href="#cb232-6" tabindex="-1"></a>}</span>
-<span id="cb232-7"><a href="#cb232-7" tabindex="-1"></a></span>
-<span id="cb232-8"><a href="#cb232-8" tabindex="-1"></a><span class="fu">print</span>(GaiaPurpose)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" tabindex="-1"></a><span class="co"># Make a custom print function for purposeBuilding</span></span>
+<span id="cb238-2"><a href="#cb238-2" tabindex="-1"></a>print.purposeBuilding <span class="ot">=</span> <span class="cf">function</span>(x)</span>
+<span id="cb238-3"><a href="#cb238-3" tabindex="-1"></a>{</span>
+<span id="cb238-4"><a href="#cb238-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(x[[<span class="st">&quot;name&quot;</span>]], <span class="st">&quot;is an&quot;</span>, x[[<span class="st">&quot;purpose&quot;</span>]], <span class="st">&quot;building that is located at x:&quot;</span>,</span>
+<span id="cb238-5"><a href="#cb238-5" tabindex="-1"></a>    x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;x&quot;</span>], <span class="st">&quot;y:&quot;</span>, x[[<span class="st">&quot;coordinates&quot;</span>]][<span class="st">&quot;y&quot;</span>]))</span>
+<span id="cb238-6"><a href="#cb238-6" tabindex="-1"></a>}</span>
+<span id="cb238-7"><a href="#cb238-7" tabindex="-1"></a></span>
+<span id="cb238-8"><a href="#cb238-8" tabindex="-1"></a><span class="fu">print</span>(GaiaPurpose)</span></code></pre></div>
 <pre><code>## [1] &quot;Gaia is an office building that is located at x: 5.665 y: 51.987&quot;</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" tabindex="-1"></a><span class="fu">print</span>(AuroraPurpose)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" tabindex="-1"></a><span class="fu">print</span>(AuroraPurpose)</span></code></pre></div>
 <pre><code>## [1] &quot;Aurora is an education building that is located at x: 5.657 y: 51.982&quot;</code></pre>
 <p>In Python, inheritance is also formally declared in the definition of
 the new class:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb236-1"><a href="#cb236-1" tabindex="-1"></a><span class="kw">class</span> purposeBuilding(building):</span>
-<span id="cb236-2"><a href="#cb236-2" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates, purpose):</span>
-<span id="cb236-3"><a href="#cb236-3" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(name, coordinates) <span class="co"># Let the parent class handle these</span></span>
-<span id="cb236-4"><a href="#cb236-4" tabindex="-1"></a>    <span class="va">self</span>.purpose <span class="op">=</span> purpose</span>
-<span id="cb236-5"><a href="#cb236-5" tabindex="-1"></a></span>
-<span id="cb236-6"><a href="#cb236-6" tabindex="-1"></a>Gaia <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>}, purpose<span class="op">=</span><span class="st">&quot;office&quot;</span>)</span>
-<span id="cb236-7"><a href="#cb236-7" tabindex="-1"></a>Aurora <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>}, purpose<span class="op">=</span><span class="st">&quot;education&quot;</span>)</span>
-<span id="cb236-8"><a href="#cb236-8" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb242-1"><a href="#cb242-1" tabindex="-1"></a><span class="kw">class</span> purposeBuilding(building):</span>
+<span id="cb242-2"><a href="#cb242-2" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates, purpose):</span>
+<span id="cb242-3"><a href="#cb242-3" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(name, coordinates) <span class="co"># Let the parent class handle these</span></span>
+<span id="cb242-4"><a href="#cb242-4" tabindex="-1"></a>    <span class="va">self</span>.purpose <span class="op">=</span> purpose</span>
+<span id="cb242-5"><a href="#cb242-5" tabindex="-1"></a></span>
+<span id="cb242-6"><a href="#cb242-6" tabindex="-1"></a>Gaia <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>}, purpose<span class="op">=</span><span class="st">&quot;office&quot;</span>)</span>
+<span id="cb242-7"><a href="#cb242-7" tabindex="-1"></a>Aurora <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>}, purpose<span class="op">=</span><span class="st">&quot;education&quot;</span>)</span>
+<span id="cb242-8"><a href="#cb242-8" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Gaia is a building that is located at x: 5.665, y: 51.987</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb238-1"><a href="#cb238-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb244-1"><a href="#cb244-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Aurora is a building that is located at x: 5.657, y: 51.982</code></pre>
 <p>We can override methods by redeclaring them, but any instantiated
 objects will have to be reinstantiated for the changes to apply:</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb240-1"><a href="#cb240-1" tabindex="-1"></a><span class="co"># Let&#39;s also override the print now:</span></span>
-<span id="cb240-2"><a href="#cb240-2" tabindex="-1"></a><span class="kw">class</span> purposeBuilding(building):</span>
-<span id="cb240-3"><a href="#cb240-3" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates, purpose):</span>
-<span id="cb240-4"><a href="#cb240-4" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(name, coordinates) <span class="co"># Let the parent class handle these</span></span>
-<span id="cb240-5"><a href="#cb240-5" tabindex="-1"></a>    <span class="va">self</span>.purpose <span class="op">=</span> purpose</span>
-<span id="cb240-6"><a href="#cb240-6" tabindex="-1"></a></span>
-<span id="cb240-7"><a href="#cb240-7" tabindex="-1"></a>  <span class="kw">def</span> <span class="bu">print</span>(<span class="va">self</span>):</span>
-<span id="cb240-8"><a href="#cb240-8" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> is a building used for </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>purpose<span class="sc">}</span><span class="ss"> purposes, located at x: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;x&quot;</span>]<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;y&quot;</span>]<span class="sc">}</span><span class="ss">&#39;</span>)</span>
-<span id="cb240-9"><a href="#cb240-9" tabindex="-1"></a>  </span>
-<span id="cb240-10"><a href="#cb240-10" tabindex="-1"></a></span>
-<span id="cb240-11"><a href="#cb240-11" tabindex="-1"></a><span class="co"># If we don&#39;t reinstantiate, the old definition applies:</span></span>
-<span id="cb240-12"><a href="#cb240-12" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb246-1"><a href="#cb246-1" tabindex="-1"></a><span class="co"># Let&#39;s also override the print now:</span></span>
+<span id="cb246-2"><a href="#cb246-2" tabindex="-1"></a><span class="kw">class</span> purposeBuilding(building):</span>
+<span id="cb246-3"><a href="#cb246-3" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, coordinates, purpose):</span>
+<span id="cb246-4"><a href="#cb246-4" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(name, coordinates) <span class="co"># Let the parent class handle these</span></span>
+<span id="cb246-5"><a href="#cb246-5" tabindex="-1"></a>    <span class="va">self</span>.purpose <span class="op">=</span> purpose</span>
+<span id="cb246-6"><a href="#cb246-6" tabindex="-1"></a></span>
+<span id="cb246-7"><a href="#cb246-7" tabindex="-1"></a>  <span class="kw">def</span> <span class="bu">print</span>(<span class="va">self</span>):</span>
+<span id="cb246-8"><a href="#cb246-8" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> is a building used for </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>purpose<span class="sc">}</span><span class="ss"> purposes, located at x: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;x&quot;</span>]<span class="sc">}</span><span class="ss">, y: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>coordinates[<span class="st">&quot;y&quot;</span>]<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb246-9"><a href="#cb246-9" tabindex="-1"></a>  </span>
+<span id="cb246-10"><a href="#cb246-10" tabindex="-1"></a></span>
+<span id="cb246-11"><a href="#cb246-11" tabindex="-1"></a><span class="co"># If we don&#39;t reinstantiate, the old definition applies:</span></span>
+<span id="cb246-12"><a href="#cb246-12" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Gaia is a building that is located at x: 5.665, y: 51.987</code></pre>
-<div class="sourceCode" id="cb242"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb242-1"><a href="#cb242-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb248-1"><a href="#cb248-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Aurora is a building that is located at x: 5.657, y: 51.982</code></pre>
-<div class="sourceCode" id="cb244"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb244-1"><a href="#cb244-1" tabindex="-1"></a>Gaia <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>}, purpose<span class="op">=</span><span class="st">&quot;office&quot;</span>)</span>
-<span id="cb244-2"><a href="#cb244-2" tabindex="-1"></a>Aurora <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>}, purpose<span class="op">=</span><span class="st">&quot;education&quot;</span>)</span>
-<span id="cb244-3"><a href="#cb244-3" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb250-1"><a href="#cb250-1" tabindex="-1"></a>Gaia <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Gaia&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.665</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.987</span>}, purpose<span class="op">=</span><span class="st">&quot;office&quot;</span>)</span>
+<span id="cb250-2"><a href="#cb250-2" tabindex="-1"></a>Aurora <span class="op">=</span> purposeBuilding(name<span class="op">=</span><span class="st">&quot;Aurora&quot;</span>, coordinates<span class="op">=</span>{<span class="st">&quot;x&quot;</span>: <span class="fl">5.657</span>, <span class="st">&quot;y&quot;</span>: <span class="fl">51.982</span>}, purpose<span class="op">=</span><span class="st">&quot;education&quot;</span>)</span>
+<span id="cb250-3"><a href="#cb250-3" tabindex="-1"></a>Gaia.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Gaia is a building used for office purposes, located at x: 5.665, y: 51.987</code></pre>
-<div class="sourceCode" id="cb246"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb246-1"><a href="#cb246-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb252-1"><a href="#cb252-1" tabindex="-1"></a>Aurora.<span class="bu">print</span>()</span></code></pre></div>
 <pre><code>## Aurora is a building used for education purposes, located at x: 5.657, y: 51.982</code></pre>
 <p>Note that R also has a more formalised type of classes, called S4
 classes, that behave a bit more similar to the Python classes, but S4
@@ -1797,58 +1853,58 @@ from the R philosophy.</p>
 the examples above: R uses curly braces <code>{}</code> to denote scope,
 whereas Python uses a colon <code>:</code> and enforces indentation. As
 an example:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb248-1"><a href="#cb248-1" tabindex="-1"></a><span class="kw">def</span> scope():</span>
-<span id="cb248-2"><a href="#cb248-2" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am inside the scope of the function scope()!&quot;</span>)</span>
-<span id="cb248-3"><a href="#cb248-3" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am also inside the scope of the function scope()!&quot;</span>)</span>
-<span id="cb248-4"><a href="#cb248-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;I am outside the scope of the function scope()!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb254-1"><a href="#cb254-1" tabindex="-1"></a><span class="kw">def</span> scope():</span>
+<span id="cb254-2"><a href="#cb254-2" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am inside the scope of the function scope()!&quot;</span>)</span>
+<span id="cb254-3"><a href="#cb254-3" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;I am also inside the scope of the function scope()!&quot;</span>)</span>
+<span id="cb254-4"><a href="#cb254-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;I am outside the scope of the function scope()!&quot;</span>)</span></code></pre></div>
 <pre><code>## I am outside the scope of the function scope()!</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb250-1"><a href="#cb250-1" tabindex="-1"></a>scope()</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb256-1"><a href="#cb256-1" tabindex="-1"></a>scope()</span></code></pre></div>
 <pre><code>## I am inside the scope of the function scope()!
 ## I am also inside the scope of the function scope()!</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1" tabindex="-1"></a>scope <span class="ot">=</span> <span class="cf">function</span>() {</span>
-<span id="cb252-2"><a href="#cb252-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am inside the scope of the function scope()!&quot;</span>)</span>
-<span id="cb252-3"><a href="#cb252-3" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am also inside the scope of the function scope()!&quot;</span>)</span>
-<span id="cb252-4"><a href="#cb252-4" tabindex="-1"></a>}</span>
-<span id="cb252-5"><a href="#cb252-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am outside the scope of the function scope()!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="#cb258-1" tabindex="-1"></a>scope <span class="ot">=</span> <span class="cf">function</span>() {</span>
+<span id="cb258-2"><a href="#cb258-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am inside the scope of the function scope()!&quot;</span>)</span>
+<span id="cb258-3"><a href="#cb258-3" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am also inside the scope of the function scope()!&quot;</span>)</span>
+<span id="cb258-4"><a href="#cb258-4" tabindex="-1"></a>}</span>
+<span id="cb258-5"><a href="#cb258-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am outside the scope of the function scope()!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;I am outside the scope of the function scope()!&quot;</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1" tabindex="-1"></a><span class="fu">scope</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="#cb260-1" tabindex="-1"></a><span class="fu">scope</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;I am inside the scope of the function scope()!&quot;
 ## [1] &quot;I am also inside the scope of the function scope()!&quot;</code></pre>
 <p>In addition, in R, typically anything that happens inside of a
 function scope stays in the function, i.e. it does not alter the global
 state.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1" tabindex="-1"></a>location <span class="ot">=</span> <span class="st">&quot;Gaia&quot;</span></span>
-<span id="cb256-2"><a href="#cb256-2" tabindex="-1"></a>move <span class="ot">=</span> <span class="cf">function</span>(where)</span>
-<span id="cb256-3"><a href="#cb256-3" tabindex="-1"></a>{</span>
-<span id="cb256-4"><a href="#cb256-4" tabindex="-1"></a>  location <span class="ot">=</span> where</span>
-<span id="cb256-5"><a href="#cb256-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Moved to&quot;</span>, location))</span>
-<span id="cb256-6"><a href="#cb256-6" tabindex="-1"></a>}</span>
-<span id="cb256-7"><a href="#cb256-7" tabindex="-1"></a></span>
-<span id="cb256-8"><a href="#cb256-8" tabindex="-1"></a><span class="fu">move</span>(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="#cb262-1" tabindex="-1"></a>location <span class="ot">=</span> <span class="st">&quot;Gaia&quot;</span></span>
+<span id="cb262-2"><a href="#cb262-2" tabindex="-1"></a>move <span class="ot">=</span> <span class="cf">function</span>(where)</span>
+<span id="cb262-3"><a href="#cb262-3" tabindex="-1"></a>{</span>
+<span id="cb262-4"><a href="#cb262-4" tabindex="-1"></a>  location <span class="ot">=</span> where</span>
+<span id="cb262-5"><a href="#cb262-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Moved to&quot;</span>, location))</span>
+<span id="cb262-6"><a href="#cb262-6" tabindex="-1"></a>}</span>
+<span id="cb262-7"><a href="#cb262-7" tabindex="-1"></a></span>
+<span id="cb262-8"><a href="#cb262-8" tabindex="-1"></a><span class="fu">move</span>(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Moved to Aurora&quot;</code></pre>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="#cb258-1" tabindex="-1"></a><span class="fu">print</span>(location)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1" tabindex="-1"></a><span class="fu">print</span>(location)</span></code></pre></div>
 <pre><code>## [1] &quot;Gaia&quot;</code></pre>
 <p>In Python it is also often true, but the list of exceptions is much
 longer.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb260-1"><a href="#cb260-1" tabindex="-1"></a>location <span class="op">=</span> <span class="st">&quot;Gaia&quot;</span></span>
-<span id="cb260-2"><a href="#cb260-2" tabindex="-1"></a><span class="kw">def</span> move(where):</span>
-<span id="cb260-3"><a href="#cb260-3" tabindex="-1"></a>  location <span class="op">=</span> where</span>
-<span id="cb260-4"><a href="#cb260-4" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Moved to &quot;</span> <span class="op">+</span> location)</span>
-<span id="cb260-5"><a href="#cb260-5" tabindex="-1"></a></span>
-<span id="cb260-6"><a href="#cb260-6" tabindex="-1"></a>move(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb266-1"><a href="#cb266-1" tabindex="-1"></a>location <span class="op">=</span> <span class="st">&quot;Gaia&quot;</span></span>
+<span id="cb266-2"><a href="#cb266-2" tabindex="-1"></a><span class="kw">def</span> move(where):</span>
+<span id="cb266-3"><a href="#cb266-3" tabindex="-1"></a>  location <span class="op">=</span> where</span>
+<span id="cb266-4"><a href="#cb266-4" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Moved to &quot;</span> <span class="op">+</span> location)</span>
+<span id="cb266-5"><a href="#cb266-5" tabindex="-1"></a></span>
+<span id="cb266-6"><a href="#cb266-6" tabindex="-1"></a>move(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
 <pre><code>## Moved to Aurora</code></pre>
-<div class="sourceCode" id="cb262"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb262-1"><a href="#cb262-1" tabindex="-1"></a><span class="bu">print</span>(location)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="#cb268-1" tabindex="-1"></a><span class="bu">print</span>(location)</span></code></pre></div>
 <pre><code>## Gaia</code></pre>
 <p>For instance, lists are mutable even outside of the function
 scope:</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb264-1"><a href="#cb264-1" tabindex="-1"></a>locations <span class="op">=</span> [<span class="st">&quot;Gaia&quot;</span>]</span>
-<span id="cb264-2"><a href="#cb264-2" tabindex="-1"></a><span class="kw">def</span> addLocation(where):</span>
-<span id="cb264-3"><a href="#cb264-3" tabindex="-1"></a>  locations.append(where)</span>
-<span id="cb264-4"><a href="#cb264-4" tabindex="-1"></a>  <span class="bu">print</span>(locations)</span>
-<span id="cb264-5"><a href="#cb264-5" tabindex="-1"></a></span>
-<span id="cb264-6"><a href="#cb264-6" tabindex="-1"></a>addLocation(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="#cb270-1" tabindex="-1"></a>locations <span class="op">=</span> [<span class="st">&quot;Gaia&quot;</span>]</span>
+<span id="cb270-2"><a href="#cb270-2" tabindex="-1"></a><span class="kw">def</span> addLocation(where):</span>
+<span id="cb270-3"><a href="#cb270-3" tabindex="-1"></a>  locations.append(where)</span>
+<span id="cb270-4"><a href="#cb270-4" tabindex="-1"></a>  <span class="bu">print</span>(locations)</span>
+<span id="cb270-5"><a href="#cb270-5" tabindex="-1"></a></span>
+<span id="cb270-6"><a href="#cb270-6" tabindex="-1"></a>addLocation(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
 <pre><code>## [&#39;Gaia&#39;, &#39;Aurora&#39;]</code></pre>
-<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb266-1"><a href="#cb266-1" tabindex="-1"></a><span class="bu">print</span>(locations)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb272-1"><a href="#cb272-1" tabindex="-1"></a><span class="bu">print</span>(locations)</span></code></pre></div>
 <pre><code>## [&#39;Gaia&#39;, &#39;Aurora&#39;]</code></pre>
 <p>Such mutability that goes outside of the function scope is called a
 side effect. They are best avoided as much as possible, as it brings
@@ -1859,15 +1915,15 @@ global environment, or the object that you passed to the function
 itself.</p>
 <p>To avoid such side effects, in Python we need to explicitly copy
 mutable objects:</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="#cb268-1" tabindex="-1"></a>locations <span class="op">=</span> [<span class="st">&quot;Gaia&quot;</span>]</span>
-<span id="cb268-2"><a href="#cb268-2" tabindex="-1"></a><span class="kw">def</span> addLocation(where):</span>
-<span id="cb268-3"><a href="#cb268-3" tabindex="-1"></a>  result <span class="op">=</span> locations.copy()</span>
-<span id="cb268-4"><a href="#cb268-4" tabindex="-1"></a>  result.append(where)</span>
-<span id="cb268-5"><a href="#cb268-5" tabindex="-1"></a>  <span class="bu">print</span>(result)</span>
-<span id="cb268-6"><a href="#cb268-6" tabindex="-1"></a></span>
-<span id="cb268-7"><a href="#cb268-7" tabindex="-1"></a>addLocation(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb274-1"><a href="#cb274-1" tabindex="-1"></a>locations <span class="op">=</span> [<span class="st">&quot;Gaia&quot;</span>]</span>
+<span id="cb274-2"><a href="#cb274-2" tabindex="-1"></a><span class="kw">def</span> addLocation(where):</span>
+<span id="cb274-3"><a href="#cb274-3" tabindex="-1"></a>  result <span class="op">=</span> locations.copy()</span>
+<span id="cb274-4"><a href="#cb274-4" tabindex="-1"></a>  result.append(where)</span>
+<span id="cb274-5"><a href="#cb274-5" tabindex="-1"></a>  <span class="bu">print</span>(result)</span>
+<span id="cb274-6"><a href="#cb274-6" tabindex="-1"></a></span>
+<span id="cb274-7"><a href="#cb274-7" tabindex="-1"></a>addLocation(<span class="st">&quot;Aurora&quot;</span>)</span></code></pre></div>
 <pre><code>## [&#39;Gaia&#39;, &#39;Aurora&#39;]</code></pre>
-<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="#cb270-1" tabindex="-1"></a><span class="bu">print</span>(locations)</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb276-1"><a href="#cb276-1" tabindex="-1"></a><span class="bu">print</span>(locations)</span></code></pre></div>
 <pre><code>## [&#39;Gaia&#39;]</code></pre>
 </div>
 <div id="summary" class="section level2">
@@ -1905,6 +1961,8 @@ during the project at the end of the course.</p>
        Bash</a></li>
        <li><a href="#data-types" id="toc-data-types">Data types</a></li>
        <li><a href="#slicing-and-accessors" id="toc-slicing-and-accessors">Slicing and accessors</a></li>
+       <li><a href="#conditionals-and-control-flow" id="toc-conditionals-and-control-flow">Conditionals and control
+       flow</a></li>
        <li><a href="#objects-and-inheritance" id="toc-objects-and-inheritance">Objects and inheritance</a></li>
        <li><a href="#scope-and-side-effects" id="toc-scope-and-side-effects">Scope and side effects</a></li>
        <li><a href="#summary" id="toc-summary">Summary</a></li>

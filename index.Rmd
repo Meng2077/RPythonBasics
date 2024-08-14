@@ -453,6 +453,57 @@ npLocMat[npLocMat > 50]
 > **Question 5**: In R and Python, slice `LocMat` to select all values below `6` and above `52`. Hint: You can combine conditions by using `&` (AND) or `|` (OR).
 ```
 
+## Conditionals and control flow
+
+We just saw that we can slice arrays based on conditions.
+We can also use conditions to structure our code, so that part of the code only runs when certain conditions are met.
+The conditionals are called `if` and `else`.
+The syntax differs a bit between R and Python.
+Here's an example in R:
+
+```{r}
+MyLatitude = 52
+GaiaLatitude = WURbuildings[WURbuildings[["name"]] == "Gaia", "y"]
+AuroraLatitude = WURbuildings[WURbuildings[["name"]] == "Aurora", "y"]
+
+if (MyLatitude > GaiaLatitude && MyLatitude > AuroraLatitude) {
+  print("I am to the north of both Gaia and Aurora")
+} else if (MyLatitude < GaiaLatitude && MyLatitude < AuroraLatitude) {
+  print("I am to the south of both Gaia and Aurora")
+} else {
+  print("I am in between Gaia and Aurora")
+}
+```
+
+Equivalent code in Python (note the lack of parentheses, the words for `and` and `or`, and the special `elif` keyword):
+
+```{python}
+MyLatitude = 52
+# Note that boolean conditionals only work with regular booleans, not with Series/DataFrames, hence the .values[0]
+GaiaLatitude = WURbuildings.loc[WURbuildings["name"] == "Gaia", "y"].values[0]
+AuroraLatitude = WURbuildings.loc[WURbuildings["name"] == "Aurora", "y"].values[0]
+
+if MyLatitude > GaiaLatitude and MyLatitude > AuroraLatitude:
+  print("I am to the north of both Gaia and Aurora")
+elif MyLatitude < GaiaLatitude and MyLatitude < AuroraLatitude:
+  print("I am to the south of both Gaia and Aurora")
+else:
+  print("I am in between Gaia and Aurora")
+```
+
+Note that the boolean operators `&` and `|` (for *and* and *or* respectively) are valid in both R and Python, but they mean different things!
+In R, `&` is a vectorised form of `&&`, in other words, it can compare boolean vectors against each other:
+
+```{r}
+c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
+```
+
+This is good in some cases, such as slicing arrays using boolean arrays, and not so good in other cases. For instance, `if (c(TRUE, FALSE))` is impossible to determine and thus will throw an error. The form `&&` only compares one boolean with another boolean and throws an error otherwise, and thus is more useful in conditionals.
+
+In Python, `&` is a bitwise comparison, that is, it does not work on booleans, but rather on numbers.
+It just so happens that Python implicitly converts booleans to numbers (`True` to 1 and `False` to 0), so it often works with booleans as well, but it is not intended for that.
+Instead, the regular boolean comparison is done using `and`.
+
 ## Objects and inheritance
 
 Both R and Python are object-oriented languages, and in this tutorial we have already worked with many objects. For example, data frames, lists and matrices are objects, and the `class()` or `type()` function prints what type of object it is, in other words, what is the class of the object. In R, `str()` allows investigating the structure of an object. Python does not have a unified function for this and different packages implement this functionality differently, if at all.
