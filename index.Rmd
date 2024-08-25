@@ -65,7 +65,7 @@ Ultimately, the choice of language to use is often decided by interoperability n
 Both the `R` and the `python` interpreters can be run from Bash. Here is an example of code that is correct in both Python and R. You can use this example to execute a script written in either language:
 ```{bash}
 # Create a script file "script" (no extension)
-echo "print('Hello world!')" > script
+echo 'print("Hello world!")' > script
 # Run the script with R
 Rscript ./script
 # Run the script with Python
