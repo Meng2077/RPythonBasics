@@ -27,7 +27,10 @@ code[class^="sourceCode r"]::before { content: "R Source";}
 code[class^="sourceCode python"]::before { content: "Python Source"; }
 code[class^="sourceCode bash"]::before { content: "Bash Source"; }
 ```
-
+```{r setup, include=FALSE}
+library(reticulate)
+use_python("/usr/bin/python3", required = TRUE)
+```
 <font size="6">[WUR Geoscripting](https://geoscripting-wur.github.io/)</font> <img src="https://www.wur.nl/upload/854757ab-168f-46d7-b415-f8b501eebaa5_WUR_RGB_standard_2021-site.svg" alt="WUR logo" style="height: 35px; margin:inherit;"/>
 
 # R and Python basics
@@ -368,11 +371,11 @@ Buildings[:3] # The fourth element is not included
 Buildings[3:] # It is included here
 ```
 
-```{block, type="alert alert-success"}
-> **Question 4**: Create a subset of `Buildings` with only `Gaia` and `Aurora`, using index slicing in R and Python. Hint: You may wish to use the functions `c()` and `numpy.array()`. 
-```
+As you see, Python interprets the missing number as the first or the last element of the array, depending on it's missing before or after the `:`. R does not, and requires you to enter `1` for the first element and `length(YourArray)` (e.g. `length(Buildings)`) for the last one.
 
-As you see, Python interprets a missing number as the first and the last element of the array. R does not, and requires you to enter `1` for the first element and `length(YourArray)` (e.g. `length(Buildings)`) for the last one.
+```{block, type="alert alert-success"}
+> **Question 4**: Create a subset of `Buildings` with only `Gaia` and `Aurora`, using index slicing in R and Python. Hint: You may wish to use the functions `c()` for R. To vectorize list in Python, `numpy.array()` would be useful, but creating plain list doesn't need it :)
+```
 
 When slicing two-dimensional arrays (matrices or data frames), two indices are used, separated by a comma, in the order `[row, column]`:
 
@@ -450,15 +453,23 @@ npLocMat[npLocMat > 50]
 ```
 
 ```{block, type="alert alert-success"}
-> **Question 5**: In R and Python, slice `LocMat` to select all values below `6` and above `52`. Hint: You can combine conditions by using `&` (AND) or `|` (OR).
+> **Question 5**: In R and Python, slice `LocMat` to select all values below `6` and above `52`. Hint: You can combine conditions by using `&` (AND) or `|` (OR). Note: In Python, always use parentheses around each condition when combining them — otherwise, operator precedence may cause unexpected behavior.
 ```
 
 ## Conditionals and control flow
 
-We just saw that we can slice arrays based on conditions.
-We can also use conditions to structure our code, so that part of the code only runs when certain conditions are met.
-The conditionals are called `if` and `else`.
-The syntax differs a bit between R and Python.
+We just saw that we can slice arrays based on conditions. In which `&` and `|` are used for both Python and R. Note that the boolean operators `&` and `|` (for *and* and *or* respectively) are valid in both R and Python, but they mean different things!
+
+In R, `&` is a *vectorised* form of `&&`, in other words, it can compare boolean vectors against each other:
+
+```{r}
+c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
+```
+
+This is good in some cases, such as slicing arrays using boolean arrays (like in Question.5, where `&&` doesn't really work), and not so good in other cases, like `if` statements that control program flow.  
+
+The conditionals `if` and `else` are used to structure our code, so that part of the code only runs when certain conditions are met. In this case, `if (c(TRUE, FALSE))` is impossible to determine and thus will throw an error. The form `&&` only compares one boolean with another boolean and throws an error otherwise, and thus is suitable. 
+
 Here's an example in R:
 
 ```{r}
@@ -466,7 +477,7 @@ MyLatitude = 52
 GaiaLatitude = WURbuildings[WURbuildings[["name"]] == "Gaia", "y"]
 AuroraLatitude = WURbuildings[WURbuildings[["name"]] == "Aurora", "y"]
 
-if (MyLatitude > GaiaLatitude && MyLatitude > AuroraLatitude) {
+if (MyLatitude > GaiaLatitude & MyLatitude > AuroraLatitude) {
   print("I am to the north of both Gaia and Aurora")
 } else if (MyLatitude < GaiaLatitude && MyLatitude < AuroraLatitude) {
   print("I am to the south of both Gaia and Aurora")
@@ -475,7 +486,15 @@ if (MyLatitude > GaiaLatitude && MyLatitude > AuroraLatitude) {
 }
 ```
 
-Equivalent code in Python (note the lack of parentheses, the words for `and` and `or`, and the special `elif` keyword):
+The `&` operator can still work in if statements when both sides are single boolean values. However, it is less strict and may lead to unexpected behavior if vectors are accidentally passed.
+
+In Python, `&` is a *bitwise* comparison, that is, it does not work on booleans, but numbers. 
+It just so happens that Python implicitly converts booleans to numbers (`True` to 1 and `False` to 0), so it often works with booleans as well, but it is not intended for that.
+This behavior makes them useful in contexts like Question.5, where we compare an array of values against numeric thresholds and want elementwise boolean logic.
+Instead, the regular boolean comparison is done using `and`, the logical comparison. It expects the entire variable to represent a single boolean value (True or False). That’s why `and` or `or` cannot be used for element-wise slicing in Question 5.
+So just like in R, when you need a single boolean result to control program flow in `if` statement, `and` is more appropriate than `&`.
+
+Equivalent example code in Python (note the syntax differs a bit between R and Python, e.g. the lack of parentheses, the words for `and` and `or`, and the special `elif` keyword):
 
 ```{python}
 MyLatitude = 52
@@ -491,18 +510,9 @@ else:
   print("I am in between Gaia and Aurora")
 ```
 
-Note that the boolean operators `&` and `|` (for *and* and *or* respectively) are valid in both R and Python, but they mean different things!
-In R, `&` is a vectorised form of `&&`, in other words, it can compare boolean vectors against each other:
-
-```{r}
-c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
+```{block, type="alert alert-success"}
+> **Question 6**: Why we don't need parentheses here in this Python code? Hint: it's something to do with operator precedence.
 ```
-
-This is good in some cases, such as slicing arrays using boolean arrays, and not so good in other cases. For instance, `if (c(TRUE, FALSE))` is impossible to determine and thus will throw an error. The form `&&` only compares one boolean with another boolean and throws an error otherwise, and thus is more useful in conditionals.
-
-In Python, `&` is a bitwise comparison, that is, it does not work on booleans, but rather on numbers.
-It just so happens that Python implicitly converts booleans to numbers (`True` to 1 and `False` to 0), so it often works with booleans as well, but it is not intended for that.
-Instead, the regular boolean comparison is done using `and`.
 
 ## Objects and inheritance
 
