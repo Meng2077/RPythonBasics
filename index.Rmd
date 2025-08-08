@@ -374,7 +374,7 @@ Buildings[3:] # It is included here
 As you see, Python interprets the missing number as the first or the last element of the array, depending on it's missing before or after the `:`. R does not, and requires you to enter `1` for the first element and `length(YourArray)` (e.g. `length(Buildings)`) for the last one.
 
 ```{block, type="alert alert-success"}
-> **Question 4**: Create a subset of `Buildings` with only `Gaia` and `Aurora`, using index slicing in R and Python. Hint: You may wish to use the functions `c()` for R. To vectorize list in Python, `numpy.array()` would be useful, but creating plain list doesn't need it :)
+> **Question 4**: Create a subset of `Buildings` with only `Gaia` and `Aurora`, using index slicing in R and Python. Hint: You may wish to use the functions `c()` for R. To vectorize a list in Python, you can use `numpy.array()`, but creating a plain list doesn’t require it :)
 ```
 
 When slicing two-dimensional arrays (matrices or data frames), two indices are used, separated by a comma, in the order `[row, column]`:
