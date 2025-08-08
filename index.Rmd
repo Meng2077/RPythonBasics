@@ -468,7 +468,7 @@ c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
 
 This is good in some cases, such as slicing arrays using boolean arrays (like in Question 5, where `&&` doesn't really work), and not so good in other cases, like `if` statements that control program flow.  This is because `if` requires a single `TRUE` or `FALSE`, not an array.
 
-The conditionals `if` and `else` are used to structure our code, so that part of the code only runs when certain conditions are met. In this case, `if (c(TRUE, FALSE))` is impossible to determine and thus will throw an error. The form `&&` only compares one boolean with another boolean and throws an error otherwise, and thus is suitable. 
+The conditionals `if` and `else` are used to structure our code, so that part of the code only runs when certain conditions are met. In this case, `if (c(TRUE, FALSE))` is impossible to determine and thus will result in an error. The form `&&` only compares one boolean with another boolean, which makes sure you do not accidentally use arrays where a single boolean is needed, and thus is suitable. 
 
 Here's an example in R:
 
@@ -490,7 +490,7 @@ The `&` operator can still work in if statements when both sides are single bool
 
 In Python, `&` is a *bitwise* comparison, that is, it does not work on booleans, but numbers. 
 It just so happens that Python implicitly converts booleans to numbers (`True` to 1 and `False` to 0), so it often works with booleans as well, but it is not intended for that.
-This behavior makes them useful in contexts like Question.5, where we compare an array of values against numeric thresholds and want elementwise boolean logic.
+This behavior makes them useful in contexts like Question 5, where we compare an array of values against numeric thresholds and want element-wise boolean logic.
 Instead, the regular boolean comparison is done using `and`, the logical comparison. It expects the entire variable to represent a single boolean value (True or False). That’s why `and` or `or` cannot be used for element-wise slicing in Question 5.
 So just like in R, when you need a single boolean result to control program flow in `if` statement, `and` is more appropriate than `&`.
 
@@ -511,7 +511,7 @@ else:
 ```
 
 ```{block, type="alert alert-success"}
-> **Question 6**: Why we don't need parentheses here in this Python code? Hint: it's something to do with operator precedence.
+> **Question 6**: Why don't we need parentheses here in this Python code? Hint: it's something to do with operator precedence.
 ```
 
 ## Objects and inheritance
