@@ -458,7 +458,7 @@ npLocMat[npLocMat > 50]
 
 ## Conditionals and control flow
 
-We just saw that we can slice arrays based on conditions. In which `&` and `|` are used for both Python and R. Note that the boolean operators `&` and `|` (for *and* and *or* respectively) are valid in both R and Python, but they mean different things!
+We just saw that we can slice arrays based on conditions. Note that the boolean operators `&` and `|` (for *and* and *or* respectively) are valid in both R and Python, but they mean different things!
 
 In R, `&` is a *vectorised* form of `&&`, in other words, it can compare boolean vectors against each other:
 
