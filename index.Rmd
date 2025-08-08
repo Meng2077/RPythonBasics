@@ -477,7 +477,7 @@ MyLatitude = 52
 GaiaLatitude = WURbuildings[WURbuildings[["name"]] == "Gaia", "y"]
 AuroraLatitude = WURbuildings[WURbuildings[["name"]] == "Aurora", "y"]
 
-if (MyLatitude > GaiaLatitude & MyLatitude > AuroraLatitude) {
+if (MyLatitude > GaiaLatitude && MyLatitude > AuroraLatitude) {
   print("I am to the north of both Gaia and Aurora")
 } else if (MyLatitude < GaiaLatitude && MyLatitude < AuroraLatitude) {
   print("I am to the south of both Gaia and Aurora")

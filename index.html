@@ -1613,10 +1613,9 @@ unexpected behavior.
 </div>
 <div id="conditionals-and-control-flow" class="section level2">
 <h2>Conditionals and control flow</h2>
-<p>We just saw that we can slice arrays based on conditions. In which
-<code>&amp;</code> and <code>|</code> are used for both Python and R.
-Note that the boolean operators <code>&amp;</code> and <code>|</code>
-(for <em>and</em> and <em>or</em> respectively) are valid in both R and
+<p>We just saw that we can slice arrays based on conditions. Note that
+the boolean operators <code>&amp;</code> and <code>|</code> (for
+<em>and</em> and <em>or</em> respectively) are valid in both R and
 Python, but they mean different things!</p>
 <p>In R, <code>&amp;</code> is a <em>vectorised</em> form of
 <code>&amp;&amp;</code>, in other words, it can compare boolean vectors
@@ -1624,21 +1623,23 @@ against each other:</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>) <span class="sc">&amp;</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1]  TRUE FALSE FALSE FALSE</code></pre>
 <p>This is good in some cases, such as slicing arrays using boolean
-arrays (like in Question.5, where <code>&amp;&amp;</code> doesn’t really
+arrays (like in Question 5, where <code>&amp;&amp;</code> doesn’t really
 work), and not so good in other cases, like <code>if</code> statements
-that control program flow.</p>
+that control program flow. This is because <code>if</code> requires a
+single <code>TRUE</code> or <code>FALSE</code>, not an array.</p>
 <p>The conditionals <code>if</code> and <code>else</code> are used to
 structure our code, so that part of the code only runs when certain
 conditions are met. In this case, <code>if (c(TRUE, FALSE))</code> is
-impossible to determine and thus will throw an error. The form
-<code>&amp;&amp;</code> only compares one boolean with another boolean
-and throws an error otherwise, and thus is suitable.</p>
+impossible to determine and thus will result in an error. The form
+<code>&amp;&amp;</code> only compares one boolean with another boolean,
+which makes sure you do not accidentally use arrays where a single
+boolean is needed, and thus is suitable.</p>
 <p>Here’s an example in R:</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" tabindex="-1"></a>MyLatitude <span class="ot">=</span> <span class="dv">52</span></span>
 <span id="cb194-2"><a href="#cb194-2" tabindex="-1"></a>GaiaLatitude <span class="ot">=</span> WURbuildings[WURbuildings[[<span class="st">&quot;name&quot;</span>]] <span class="sc">==</span> <span class="st">&quot;Gaia&quot;</span>, <span class="st">&quot;y&quot;</span>]</span>
 <span id="cb194-3"><a href="#cb194-3" tabindex="-1"></a>AuroraLatitude <span class="ot">=</span> WURbuildings[WURbuildings[[<span class="st">&quot;name&quot;</span>]] <span class="sc">==</span> <span class="st">&quot;Aurora&quot;</span>, <span class="st">&quot;y&quot;</span>]</span>
 <span id="cb194-4"><a href="#cb194-4" tabindex="-1"></a></span>
-<span id="cb194-5"><a href="#cb194-5" tabindex="-1"></a><span class="cf">if</span> (MyLatitude <span class="sc">&gt;</span> GaiaLatitude <span class="sc">&amp;</span> MyLatitude <span class="sc">&gt;</span> AuroraLatitude) {</span>
+<span id="cb194-5"><a href="#cb194-5" tabindex="-1"></a><span class="cf">if</span> (MyLatitude <span class="sc">&gt;</span> GaiaLatitude <span class="sc">&amp;&amp;</span> MyLatitude <span class="sc">&gt;</span> AuroraLatitude) {</span>
 <span id="cb194-6"><a href="#cb194-6" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am to the north of both Gaia and Aurora&quot;</span>)</span>
 <span id="cb194-7"><a href="#cb194-7" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (MyLatitude <span class="sc">&lt;</span> GaiaLatitude <span class="sc">&amp;&amp;</span> MyLatitude <span class="sc">&lt;</span> AuroraLatitude) {</span>
 <span id="cb194-8"><a href="#cb194-8" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;I am to the south of both Gaia and Aurora&quot;</span>)</span>
@@ -1654,8 +1655,8 @@ is, it does not work on booleans, but numbers. It just so happens that
 Python implicitly converts booleans to numbers (<code>True</code> to 1
 and <code>False</code> to 0), so it often works with booleans as well,
 but it is not intended for that. This behavior makes them useful in
-contexts like Question.5, where we compare an array of values against
-numeric thresholds and want elementwise boolean logic. Instead, the
+contexts like Question 5, where we compare an array of values against
+numeric thresholds and want element-wise boolean logic. Instead, the
 regular boolean comparison is done using <code>and</code>, the logical
 comparison. It expects the entire variable to represent a single boolean
 value (True or False). That’s why <code>and</code> or <code>or</code>
@@ -1682,7 +1683,7 @@ keyword):</p>
 <div class="alert alert-success">
 <blockquote>
 <p>
-<strong>Question 6</strong>: Why we don’t need parentheses here in this
+<strong>Question 6</strong>: Why don’t we need parentheses here in this
 Python code? Hint: it’s something to do with operator precedence.
 </p>
 </blockquote>
@@ -1805,9 +1806,9 @@ it:</p>
 our object, not the global function <code>print()</code>, which would
 give a different output:</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="#cb230-1" tabindex="-1"></a><span class="bu">print</span>(Gaia)</span></code></pre></div>
-<pre><code>## &lt;__main__.building object at 0x763f16fc9430&gt;</code></pre>
+<pre><code>## &lt;__main__.building object at 0x7a4f5b8f9ca0&gt;</code></pre>
 <div class="sourceCode" id="cb232"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb232-1"><a href="#cb232-1" tabindex="-1"></a><span class="bu">print</span>(Aurora)</span></code></pre></div>
-<pre><code>## &lt;__main__.building object at 0x763f167c23c0&gt;</code></pre>
+<pre><code>## &lt;__main__.building object at 0x7a4f5b7d0890&gt;</code></pre>
 <p>A key concept in object-oriented programming is inheritance: a class
 can inherit properties and methods of its parent class. This allows us
 to make extensions of existing classes without having to duplicate a lot
